@@ -1,0 +1,855 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+}
+
+/* Input + Button */
+.input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* ← اسمح بالـ wrap */
+    align-items: flex-end; /* ← اعدّل المحاذاة */
+}
+
+.input-field {
+    flex: 1 1 200px; /* ← خذ حيز لكن مع minimum */
+    min-width: 150px;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.date-input {
+    flex: 0 1 150px; /* ← حجم محدد */
+    padding: 12px 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.priority-select,
+.category-select {
+    flex: 0 1 120px; /* ← حجم محدد */
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-button {
+    flex: 0 0 auto; /* ← بدون flex، حجم ثابت */
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    white-space: nowrap; /* ← لا تنفض النص */
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .input-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .input-field,
+    .date-input,
+    .priority-select,
+    .category-select,
+    .add-button {
+        flex: 1;
+        width: 100%;
+    }
+}
+
+/* Todos Container */
+.todos-container {
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    font-size: 18px;
+    padding: 40px 20px;
+}
+
+/* Todo List */
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.todo-item:hover {
+    background: #f0f0f0;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.done {
+    background: #f0f0f0;
+    opacity: 0.7;
+    border-left-color: #999;
+}
+
+/* Checkbox */
+.todo-checkbox {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    cursor: pointer;
+    accent-color: #667eea;
+    transition: all 0.2s ease;
+}
+
+.todo-checkbox:hover {
+    transform: scale(1.2);
+}
+
+/* Todo Text */
+.todo-text {
+    flex: 1;
+    font-size: 16px;
+    color: #333;
+    word-break: break-word;
+}
+
+.todo-item.done .todo-text {
+    color: #999;
+    text-decoration: line-through;
+}
+
+/* Delete Button */
+.delete-button {
+    padding: 6px 12px;
+    font-size: 16px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.2);
+    min-width: 50px;
+}
+
+.delete-button:hover {
+    background: #ff5252;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+/* Stats */
+.stats {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .input-field {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .add-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .todo-item {
+        padding: 12px;
+        flex-wrap: wrap;
+    }
+}
+
+/* Priority Badge */
+.priority {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.priority-high {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.priority-medium {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.priority-low {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* Select Styling */
+select {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+/* Category Badge */
+.category {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.category-study {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.category-work {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+}
+
+.category-sport {
+    background-color: #fce4ec;
+    color: #c2185b;
+}
+
+.category-home {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.category-other {
+    background-color: #f5f5f5;
+    color: #424242;
+}
+
+/* Category Select */
+.category-select {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.date-input {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+}
+
+.due-date {
+    padding: 4px 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: #333;
+}
+
+/* Edit Mode */
+.edit-mode {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.edit-input {
+    flex: 1;
+    min-width: 150px;
+    padding: 8px 10px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.edit-date {
+    flex: 0 1 120px;
+    padding: 8px 10px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.edit-priority,
+.edit-category {
+    flex: 0 1 100px;
+    padding: 8px 8px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.save-button {
+    padding: 8px 12px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.save-button:hover {
+    background-color: #45a049;
+}
+
+.cancel-button {
+    padding: 8px 12px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+    background-color: #da190b;
+}
+
+/* View Mode */
+.view-mode {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    .input-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .input-field,
+    .date-input,
+    .priority-select,
+    .category-select {
+        width: 100%;
+        flex: 1;
+    }
+    
+    .add-button {
+        width: 100%;
+    }
+    
+    .todo-item {
+        flex-wrap: wrap;
+        padding: 12px;
+    }
+    
+    .todo-text {
+        flex: 1 1 100%;
+        margin-bottom: 8px;
+    }
+    
+    .due-date,
+    .priority,
+    .category {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .edit-button,
+    .delete-button {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+    .container {
+        margin: 5px;
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    .input-field,
+    .date-input,
+    .priority-select,
+    .category-select,
+    .add-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+    
+    .todo-item {
+        padding: 10px;
+        gap: 6px;
+    }
+    
+    .todo-text {
+        font-size: 14px;
+    }
+    
+    .edit-mode {
+        gap: 5px;
+    }
+    
+    .edit-input,
+    .edit-date,
+    .edit-priority,
+    .edit-category {
+        font-size: 12px;
+        padding: 6px;
+    }
+    
+    .save-button,
+    .cancel-button,
+    .edit-button,
+    .delete-button {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dark-mode-button {
+    padding: 8px 15px;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-button:hover {
+    background-color: #764ba2;
+}
+
+/* Dark Mode Colors */
+.container.dark-mode {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.container.dark-mode h1 {
+    color: #fff;
+}
+
+.container.dark-mode .input-field,
+.container.dark-mode .date-input,
+.container.dark-mode .priority-select,
+.container.dark-mode .category-select,
+.container.dark-mode .search-input {
+    background-color: #2d2d2d;
+    color: #fff;
+    border-color: #444;
+}
+
+.container.dark-mode .input-field::placeholder,
+.container.dark-mode .date-input::placeholder,
+.container.dark-mode .search-input::placeholder {
+    color: #999;
+}
+
+.container.dark-mode .todo-item {
+    background-color: #2d2d2d;
+    color: #fff;
+    border-left-color: #667eea;
+}
+
+.container.dark-mode .todo-item:hover {
+    background-color: #3a3a3a;
+}
+
+.container.dark-mode .todo-item.done {
+    background-color: #252525;
+    opacity: 0.6;
+}
+
+.container.dark-mode .stats {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.container.dark-mode .empty-message {
+    color: #999;
+}
+
+.container.dark-mode .due-date {
+    background-color: #444;
+    color: #ddd;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.dark-mode-button {
+    padding: 8px 15px;
+    background-color: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dark-mode-button:hover {
+    background-color: #764ba2;
+}
+
+/* Dark Mode Colors */
+.container.dark-mode {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+.container.dark-mode h1 {
+    color: #fff;
+}
+
+.container.dark-mode .input-field,
+.container.dark-mode .date-input,
+.container.dark-mode .priority-select,
+.container.dark-mode .category-select,
+.container.dark-mode .search-input {
+    background-color: #2d2d2d;
+    color: #fff;
+    border-color: #444;
+}
+
+.container.dark-mode .input-field::placeholder,
+.container.dark-mode .date-input::placeholder,
+.container.dark-mode .search-input::placeholder {
+    color: #999;
+}
+
+.container.dark-mode .todo-item {
+    background-color: #2d2d2d;
+    color: #fff;
+    border-left-color: #667eea;
+}
+
+.container.dark-mode .todo-item:hover {
+    background-color: #3a3a3a;
+}
+
+.container.dark-mode .todo-item.done {
+    background-color: #252525;
+    opacity: 0.6;
+}
+
+.container.dark-mode .stats {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.container.dark-mode .empty-message {
+    color: #999;
+}
+
+.container.dark-mode .due-date {
+    background-color: #444;
+    color: #ddd;
+}
+
+/* ===== ANIMATIONS ===== */
+
+/* Slide In - عند إضافة مهمة */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade Out - عند الحذف */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
+/* Bounce - للزرار */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+/* Pulse - للتاريخ */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* تطبيق الـ Animations */
+.todo-item {
+    animation: slideIn 0.4s ease-out;
+}
+
+.add-button,
+.edit-button,
+.delete-button,
+.save-button,
+.cancel-button,
+.dark-mode-button {
+    animation: bounce 0.3s ease-out;
+}
+
+.add-button:hover,
+.edit-button:hover,
+.delete-button:hover,
+.save-button:hover,
+.cancel-button:hover,
+.dark-mode-button:hover {
+    animation: bounce 0.4s infinite;
+}
+
+.due-date {
+    animation: pulse 2s infinite;
+}
+
+/* Smooth Transitions */
+.input-field,
+.date-input,
+.priority-select,
+.category-select,
+.search-input {
+    transition: all 0.3s ease;
+}
+
+.todo-item {
+    transition: all 0.3s ease;
+}
+
+.priority,
+.category,
+.due-date {
+    transition: all 0.3s ease;
+}
+
+button {
+    transition: all 0.3s ease;
+}
+
+/* Hover Effects */
+.todo-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.priority:hover,
+.category:hover,
+.due-date:hover {
+    transform: scale(1.05);
+}
+
+/* Focus Effects */
+.input-field:focus,
+.date-input:focus,
+.priority-select:focus,
+.category-select:focus,
+.search-input:focus {
+    transform: scale(1.02);
+}
+
+/* Dark Mode Animations */
+.container.dark-mode .todo-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+/* Delete Animation */
+@keyframes deleteSlide {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+        max-height: 100px;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px);
+        max-height: 0;
+    }
+}
+
+.todo-item.deleting {
+    animation: deleteSlide 0.3s ease-out forwards;
+}
