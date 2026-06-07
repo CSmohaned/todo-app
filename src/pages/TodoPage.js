@@ -151,8 +151,8 @@ function TodoPage() {
         
         if (draggedId === targetId) return;
         
-        const draggedIndex = filteredTodos.findIndex(t => t.id === draggedId);
-        const targetIndex = filteredTodos.findIndex(t => t.id === targetId);
+        // const draggedIndex = filteredTodos.findIndex(t => t.id === draggedId);
+        // const targetIndex = filteredTodos.findIndex(t => t.id === targetId);
         
         // إنشاء array جديد بالترتيب الجديد
         const newList = [...todoList];
